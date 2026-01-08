@@ -20,19 +20,17 @@ import seaborn as sns
 import antropy as ant
 import nolds
 
-# =========================================================================
-# 1. CONFIGURATION
-# =========================================================================
+# 1. Data Import
 DATA_FILES = {
-    "2x3": "2x3_sampling_rqa_metrics_output_ACCURACY_UPDATED.csv",
-    "2x5": "2x5_fixed_sampling_rqa_metrics_output_ACCURACY_UPDATED.csv",
-    "3x3": "3x3_sampling_rqa_metrics_output_ACCURACY_UPDATED.csv",
-    "4x4": "4x4_sampling_rqa_metrics_output_ACCURACY_UPDATED.csv",
-    "4x3": "4x3_sampling_rqa_metrics_output_ACCURACY_UPDATED.csv",
-    "5x2": "5x2_sampling_rqa_metrics_output_ACCURACY_UPDATED.csv",
-    "3x4": "3x4_sampling_rqa_metrics_output_ACCURACY_UPDATED.csv",
-    "3x2": "3x2_sampling_rqa_metrics_output_ACCURACY_UPDATED.csv",
-    "2x4": "2x4_sampling_rqa_metrics_output_ACCURACY_UPDATED.csv",
+    "2x3": "data/2x3_sampling_rqa_metrics_output.csv",
+    "2x5": "data/2x5_fixed_sampling_rqa_metrics_output.csv",
+    "3x3": "data/3x3_sampling_rqa_metrics_output.csv",
+    "4x4": "data/4x4_sampling_rqa_metrics_output.csv",
+    "4x3": "data/4x3_sampling_rqa_metrics_output.csv",
+    "5x2": "data/5x2_sampling_rqa_metrics_output.csv",
+    "3x4": "data/3x4_sampling_rqa_metrics_output.csv",
+    "3x2": "data/3x2_sampling_rqa_metrics_output.csv",
+    "2x4": "data/2x4_sampling_rqa_metrics_output.csv",
 }
 N_SPLITS = 8 # K for GroupKFold
 RANDOM_STATE = 42
@@ -44,7 +42,7 @@ def load_and_engineer_all_features(file_dict: dict) -> pd.DataFrame | None:
     for difficulty, filename in file_dict.items():
         filepath = Path(filename)
         if not filepath.exists():
-            print(f"⚠️ Warning: File not found, skipping: '{filename}'")
+            print(f"Warning: File not found, skipping: '{filename}'")
             continue
         df = pd.read_csv(filepath)
         df['difficulty'] = difficulty
@@ -121,7 +119,7 @@ def load_and_engineer_all_features(file_dict: dict) -> pd.DataFrame | None:
     
     # Drop rows where key features could not be calculated
     final_df = combined_df.dropna(subset=['global_det', 'response_length'] + all_engineered_features)
-    print(f"✅ Feature engineering complete. Using {len(final_df)} valid samples.")
+    print(f"Feature engineering complete. Using {len(final_df)} valid samples.")
     return final_df
 
 
@@ -152,7 +150,7 @@ def plot_significance_matrix(p_values_dict: dict, n_splits: int, target_col: str
         PLOT_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
         filename = f"significance_matrix_{target_col}.png"
         plt.savefig(PLOT_OUTPUT_DIR / filename, dpi=300, bbox_inches='tight')
-        print(f"✅ Significance matrix saved to '{PLOT_OUTPUT_DIR / filename}'")
+        print(f"Significance matrix saved to '{PLOT_OUTPUT_DIR / filename}'")
     plt.show()
 
 
