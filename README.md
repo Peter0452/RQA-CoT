@@ -68,7 +68,7 @@ python evaluate_results.py
 
 ## Citation
 ```bibtex
-@article{pham2025mindblurting,
+@article{2025mindblurting,
   title={Is my model "mind blurting"? Interpreting the dynamics of reasoning tokens with RQA},
   author={...},
   journal={arXiv preprint...},
